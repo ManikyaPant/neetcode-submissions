@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int change(int amount, vector<int>& arr) {
+        int n = arr.size();
+        vector < vector < int>> dp(n+1 , vector < int>(amount+1,0));
+        dp[n][0] = 1;
+        for(int i=0;i<n;i++){
+            dp[i][0] = 1; 
+        }
+        for(int i=n-1;i>=0;i--){
+            for(int j=0;j<=amount;j++){
+                int v1 =0 , v2=0; 
+                    v1 = dp[i+1][j];
+                if(j >=arr[i]){
+                    v2 = dp[i][j-arr[i]];
+                }
+                dp[i][j] = v1 + v2;
+            }
+        }
+        return dp[0][amount];
+    }
+};
